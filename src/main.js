@@ -2,11 +2,15 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 import getImagesByQuery from './js/pixabay-api.js';
-import { createGallery, clearGallery } from './js/render-functions.js';
+import {
+  createGallery,
+  clearGallery,
+  showLoader,
+  hideLoader,
+} from './js/render-functions.js';
 
 const form = document.querySelector('.form');
 const inputQuery = document.querySelector('input[name="search-text"]');
-const loader = document.querySelector('.loader');
 
 form.addEventListener('submit', event => {
   event.preventDefault();
@@ -24,13 +28,13 @@ form.addEventListener('submit', event => {
     return;
   }
 
-  loader.classList.remove('is-hidden');
+  showLoader();
 
   getImagesByQuery(query)
-    .then(response => {
+    .then(data => {
       clearGallery();
 
-      if (response.data.hits.length === 0) {
+      if (data.hits.length === 0) {
         iziToast.show({
           message:
             'Sorry, there are no images matching your search query. Please try again!',
@@ -38,14 +42,15 @@ form.addEventListener('submit', event => {
           backgroundColor: 'red',
           messageColor: 'white',
         });
+        return;
       }
 
-      createGallery(response.data.hits);
+      createGallery(data.hits);
     })
     .catch(error => {
       console.log(error);
     })
     .finally(() => {
-      loader.classList.add('is-hidden');
+      hideLoader();
     });
 });
