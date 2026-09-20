@@ -27,13 +27,11 @@ form.addEventListener('submit', event => {
     });
     return;
   }
-
+  clearGallery();
   showLoader();
 
   getImagesByQuery(query)
     .then(data => {
-      clearGallery();
-
       if (data.hits.length === 0) {
         iziToast.show({
           message:
