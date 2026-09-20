@@ -1,7 +1,6 @@
 .loader {
-    --color-1: #fff;
+    --color-1: #4e75ff;
     --size: 1px;
-
     width: calc(20 * var(--size));
     height: calc(12 * var(--size));
     display: block;
@@ -25,13 +24,13 @@
     border-radius: calc(4 * var(--size));
     top: 0;
     right: 110%;
-    animation: animloader 0.6s ease infinite alternate;
+    animation: animloader 1s ease infinite alternate;
 }
 
 .loader::after {
     left: 110%;
     right: auto;
-    animation-delay: 0.6s;
+    animation-delay: 1s;
 }
 
 @keyframes animloader {
@@ -42,4 +41,8 @@
     100% {
         width: calc(48 * var(--size));
     }
+}
+
+.loader.is-hidden {
+    display: none;
 }
